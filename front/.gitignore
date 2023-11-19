@@ -1,0 +1,19 @@
+# Node
+node_modules/
+
+# Angular
+/angular.json
+/tsconfig.json
+/tsconfig.base.json
+/tslint.json
+/*.js
+/*.js.map
+/*.d.ts
+/dist/
+/node_modules/
+/.angular/cache/
+
+
+# System Files
+.DS_Store
+Thumbs.db
