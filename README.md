@@ -6,7 +6,7 @@ Créer un module angular "product" avec 2 composants (basés sur primeng):
  - **products** : qui liste les produits en mode lecture seule, comme sur une boutique en ligne.
     Il doit être accessible à cette adresse : http://localhost:4200/products
 
-Une liste de produit est disponible dans le dossier assets : `front/assets/products.json`.
+Une liste de produit est disponible dans le dossier assets : `front/src/assets/products.json`.
 
 Le service qui permettra de manipuler les produits doit se baser sur cette liste et être prêt à être connecté sur une API Rest ultérieurement
 
