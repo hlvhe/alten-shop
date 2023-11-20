@@ -1,0 +1,49 @@
+<div class="product-list">
+  <input
+    pInputText
+    placeholder="Search"
+    [(ngModel)]="searchText"
+    (input)="applyFilter()"
+  />
+  <p-dataView
+    [value]="filteredProducts"
+    [rows]="rows"
+    [paginator]="true"
+    [totalRecords]="totalRecords"
+    [sortField]="sortField"
+    [sortOrder]="sortOrder"
+    layout="grid"
+  >
+    <ng-template pTemplate="header">
+      <div>
+        <p-dropdown
+          [options]="sortOptions"
+          placeholder="Sort By Price"
+          (onChange)="onSortChange($event)"
+        ></p-dropdown>
+      </div>
+    </ng-template>
+    <ng-template let-product pTemplate="gridItem">
+      <div class="product-card">
+        <p-card>
+          <p>{{ product.category }}</p>
+          <p>{{ product.name }}</p>
+          <p>{{ product.description }}</p>
+          <p-rating
+            [(ngModel)]="product.rating"
+            [cancel]="false"
+            [readonly]="true"
+          ></p-rating>
+          <p>${{ product.price }}</p>
+          <button
+            pButton
+            type="button"
+            label="{{ product.inventoryStatus }}"
+            [disabled]="product.inventoryStatus === 'OUTOFSTOCK'"
+            [class.status-outofstock]="product.inventoryStatus === 'OUTOFSTOCK'"
+          ></button>
+        </p-card>
+      </div>
+    </ng-template>
+  </p-dataView>
+</div>

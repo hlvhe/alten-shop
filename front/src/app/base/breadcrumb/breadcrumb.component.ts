@@ -37,7 +37,7 @@ export class BreadcrumbComponent implements OnInit {
   }
 
   private buildBreadcrumb(path: string): void {
-    const firstPath: SidenavItem = this.sidenavItems.find(item => '/' + item.id === path);
+    const firstPath: SidenavItem = this.sidenavItems.find((item) => item.link === path);
     if (firstPath) {
       this.items.push({
         label: firstPath.labels[this.lang],
@@ -46,5 +46,4 @@ export class BreadcrumbComponent implements OnInit {
       });
     }
   }
-
 }
