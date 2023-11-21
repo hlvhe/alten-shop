@@ -2,16 +2,17 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProductsComponent } from './products/products.component';
 import { PrimeNGModule } from 'app/shared/utils/primeng/primeng.module';
-import { ProductsService } from './products/products.service';
+import { ProductService } from './product.service';
+import { ProductsAdminComponent } from './products-admin/products-admin.component';
 
 
 @NgModule({
-  declarations: [ProductsComponent],
+  declarations: [ProductsComponent, ProductsAdminComponent],
   imports: [
     CommonModule,
-    PrimeNGModule
+    PrimeNGModule,
   ],
-  exports: [ProductsComponent],
-  providers: [ProductsService]
+  exports: [ProductsComponent, ProductsAdminComponent],
+  providers: [ProductService]
 })
 export class ProductModule { }

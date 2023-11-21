@@ -1,24 +1,33 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { Observable } from "rxjs";
+import { Observable, catchError } from "rxjs";
 import { Product } from "./product.model";
 
 @Injectable()
 export class ProductService {
-  private apiUrl = "assets/products.json";
+  private apiUrl = "http://localhost:3000/api/products";
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   getProducts(): Observable<Product[]> {
-    return this.http.get<Product[]>(this.apiUrl);
+    return this.http.get<Product[]>(this.apiUrl).pipe(
+      catchError((error) => {
+        console.error('Error fetching products:', error);
+        throw error
+      })
+    );
+  }
+
+  updateProduct(product: Product): Observable<Product> {
+    return this.http.put<Product>(this.apiUrl, product).pipe(
+      catchError((error) => {
+        console.error('Error updating product:', error);
+        throw error;
+      }))
   }
 
   addProduct(product: Product): Observable<Product> {
     return this.http.post<Product>(this.apiUrl, product);
-  }
-
-  updateProduct(product: Product): Observable<Product> {
-    return this.http.put<Product>(`${this.apiUrl}/${product.id}`, product);
   }
 
   deleteProduct(productId: number): Observable<void> {

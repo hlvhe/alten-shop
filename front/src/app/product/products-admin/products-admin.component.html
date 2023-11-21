@@ -1,0 +1,71 @@
+<p-table [value]="products" dataKey="id" editMode="row" class="product-list">
+  <ng-template pTemplate="header">
+    <tr>
+      <th>Code</th>
+      <th>Name</th>
+      <th>Actions</th>
+    </tr>
+  </ng-template>
+  <ng-template
+    pTemplate="body"
+    let-product
+    let-editing="editing"
+    let-ri="rowIndex"
+  >
+    <tr [pEditableRow]="product">
+      <td>
+        <p-cellEditor>
+          <ng-template pTemplate="input">
+            <input pInputText type="text" [(ngModel)]="product.code" />
+          </ng-template>
+          <ng-template pTemplate="output">
+            {{ product.code }}
+          </ng-template>
+        </p-cellEditor>
+      </td>
+      <td>
+        <p-cellEditor>
+          <ng-template pTemplate="input">
+            <input pInputText type="text" [(ngModel)]="product.name" />
+          </ng-template>
+          <ng-template pTemplate="output">
+            {{ product.name }}
+          </ng-template>
+        </p-cellEditor>
+      </td>
+      <td>
+        <div>
+          <button
+            *ngIf="!editing"
+            pButton
+            pRipple
+            type="button"
+            pInitEditableRow
+            icon="pi pi-pencil"
+            (click)="onRowEditInit(product)"
+          ></button>
+          <button
+            *ngIf="editing"
+            pButton
+            pRipple
+            type="button"
+            pSaveEditableRow
+            icon="pi pi-check"
+            (click)="onRowEditSave(product)"
+            style="margin-right:1em;"
+          ></button>
+          <button
+            *ngIf="editing"
+            pButton
+            pRipple
+            type="button"
+            pCancelEditableRow
+            icon="pi pi-times"
+            (click)="onRowEditCancel(product, ri)"
+
+          ></button>
+        </div>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
