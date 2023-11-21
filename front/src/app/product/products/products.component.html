@@ -1,10 +1,4 @@
 <div class="product-list">
-  <input
-    pInputText
-    placeholder="Search"
-    [(ngModel)]="searchText"
-    (input)="applyFilter()"
-  />
   <p-dataView
     [value]="filteredProducts"
     [rows]="rows"
@@ -21,6 +15,12 @@
           placeholder="Sort By Price"
           (onChange)="onSortChange($event)"
         ></p-dropdown>
+        <input
+          pInputText
+          placeholder="Search"
+          [(ngModel)]="searchText"
+          (input)="applyFilter()"
+        />
       </div>
     </ng-template>
     <ng-template let-product pTemplate="gridItem">
