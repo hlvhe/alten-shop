@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
-import { ProductsService } from "./products.service";
-import { Product } from "./product.model";
+import { ProductService } from "../product.service";
+import { Product } from "../product.model";
 import { SelectItem } from "primeng/api";
 
 @Component({
@@ -22,7 +22,7 @@ export class ProductsComponent implements OnInit {
   sortField!: string;
   searchText: string = "";
 
-  constructor(private productService: ProductsService) {}
+  constructor(private productService: ProductService) {}
 
   ngOnInit(): void {
     this.loadProducts();

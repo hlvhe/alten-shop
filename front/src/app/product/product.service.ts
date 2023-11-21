@@ -4,13 +4,12 @@ import { Observable } from "rxjs";
 import { Product } from "./product.model";
 
 @Injectable()
-export class ProductsService {
+export class ProductService {
   private apiUrl = "assets/products.json";
 
   constructor(private http: HttpClient) {}
 
   getProducts(): Observable<Product[]> {
-    console.log("getProducts");
     return this.http.get<Product[]>(this.apiUrl);
   }
 
