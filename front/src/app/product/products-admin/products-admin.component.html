@@ -7,6 +7,17 @@
         label="New"
         icon="pi pi-plus"
         (click)="openNew()"
+        style="margin-right: 1em"
+      ></button>
+
+      <button
+        pButton
+        pRipple
+        label="Delete"
+        icon="pi pi-trash"
+        class="p-button-danger"
+        (click)="deleteSelectedProducts()"
+        [disabled]="!selectedProducts || !selectedProducts.length"
       ></button>
     </ng-template>
   </p-toolbar>
@@ -18,9 +29,13 @@
     [rows]="rows"
     [paginator]="true"
     [totalRecords]="totalRecords"
+    [(selection)]="selectedProducts"
   >
     <ng-template pTemplate="header">
       <tr>
+        <th style="width: 4rem">
+          <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+        </th>
         <th pSortableColumn="code" style="min-width: 15rem">
           Code <p-sortIcon field="code"></p-sortIcon>
         </th>
@@ -37,6 +52,9 @@
       let-ri="rowIndex"
     >
       <tr [pEditableRow]="product">
+        <td>
+          <p-tableCheckbox [value]="product"></p-tableCheckbox>
+        </td>
         <td>
           <p-cellEditor>
             <ng-template pTemplate="input">

@@ -71,10 +71,14 @@ export class ProductsAdminComponent implements OnInit {
       next: () => {
       },
       error: (error) => {
-        console.error("Error updating product:", error);
+        console.error("Error deleting product:", error);
         this.loadProducts();
       },
     });
+  }
+
+  deleteSelectedProducts() {
+    console.log(this.selectedProducts);
   }
 
   saveProduct() {
@@ -85,7 +89,7 @@ export class ProductsAdminComponent implements OnInit {
         this.productDialog = false;
       },
       error: (error) => {
-        console.error("Error updating product:", error);
+        console.error("Error saving product:", error);
       },
     });
 
