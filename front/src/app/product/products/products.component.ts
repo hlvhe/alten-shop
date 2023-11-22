@@ -28,11 +28,17 @@ export class ProductsComponent implements OnInit {
     this.loadProducts();
   }
 
-  loadProducts(): void {
-    this.productService.getProducts().subscribe((data) => {
-      this.products = data["data"];
-      this.totalRecords = this.products.length;
-      this.filteredProducts = this.products;
+
+  private loadProducts(): void {
+    this.productService.getProducts().subscribe({
+      next: (products: Product[]) => {
+        this.products = products["data"];
+        this.totalRecords = this.products.length;
+        this.filteredProducts = this.products;
+      },
+      error: (error) => {
+        console.error('Error fetching products:', error);
+      }
     });
   }
 

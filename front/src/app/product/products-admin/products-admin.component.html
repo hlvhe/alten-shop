@@ -1,71 +1,105 @@
-<p-table [value]="products" dataKey="id" editMode="row" class="product-list">
-  <ng-template pTemplate="header">
-    <tr>
-      <th>Code</th>
-      <th>Name</th>
-      <th>Actions</th>
-    </tr>
-  </ng-template>
-  <ng-template
-    pTemplate="body"
-    let-product
-    let-editing="editing"
-    let-ri="rowIndex"
-  >
-    <tr [pEditableRow]="product">
-      <td>
-        <p-cellEditor>
-          <ng-template pTemplate="input">
-            <input pInputText type="text" [(ngModel)]="product.code" />
-          </ng-template>
-          <ng-template pTemplate="output">
-            {{ product.code }}
-          </ng-template>
-        </p-cellEditor>
-      </td>
-      <td>
-        <p-cellEditor>
-          <ng-template pTemplate="input">
-            <input pInputText type="text" [(ngModel)]="product.name" />
-          </ng-template>
-          <ng-template pTemplate="output">
-            {{ product.name }}
-          </ng-template>
-        </p-cellEditor>
-      </td>
-      <td>
-        <div>
-          <button
-            *ngIf="!editing"
-            pButton
-            pRipple
-            type="button"
-            pInitEditableRow
-            icon="pi pi-pencil"
-            (click)="onRowEditInit(product)"
-          ></button>
-          <button
-            *ngIf="editing"
-            pButton
-            pRipple
-            type="button"
-            pSaveEditableRow
-            icon="pi pi-check"
-            (click)="onRowEditSave(product)"
-            style="margin-right:1em;"
-          ></button>
-          <button
-            *ngIf="editing"
-            pButton
-            pRipple
-            type="button"
-            pCancelEditableRow
-            icon="pi pi-times"
-            (click)="onRowEditCancel(product, ri)"
 
-          ></button>
-        </div>
-      </td>
-    </tr>
+<div class="container"
+>
+  <p-toolbar>
+    <ng-template pTemplate="left">
+        <button pButton pRipple label="New" icon="pi pi-plus" (click)="openNew()"></button>
+    </ng-template>
+  </p-toolbar>
+
+  <p-table
+    [value]="products"
+    dataKey="id"
+    editMode="row"
+    [rows]="rows"
+    [paginator]="true"
+    [totalRecords]="totalRecords"
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th pSortableColumn="code" style="min-width:15rem">Code <p-sortIcon field="code"></p-sortIcon></th>
+        <th pSortableColumn="name" style="min-width:15rem">Name <p-sortIcon field="name"></p-sortIcon></th>
+        <th>Actions</th>
+      </tr>
+    </ng-template>
+    <ng-template
+      pTemplate="body"
+      let-product
+      let-editing="editing"
+      let-ri="rowIndex"
+    >
+      <tr [pEditableRow]="product">
+        <td>
+          <p-cellEditor>
+            <ng-template pTemplate="input">
+              <input pInputText type="text" [(ngModel)]="product.code" />
+            </ng-template>
+            <ng-template pTemplate="output">
+              {{ product.code }}
+            </ng-template>
+          </p-cellEditor>
+        </td>
+        <td>
+          <p-cellEditor>
+            <ng-template pTemplate="input">
+              <input pInputText type="text" [(ngModel)]="product.name" />
+            </ng-template>
+            <ng-template pTemplate="output">
+              {{ product.name }}
+            </ng-template>
+          </p-cellEditor>
+        </td>
+        <td>
+          <div>
+            <button
+              *ngIf="!editing"
+              pButton
+              pRipple
+              type="button"
+              pInitEditableRow
+              icon="pi pi-pencil"
+              (click)="onRowEditInit(product)"
+            ></button>
+            <button
+              *ngIf="editing"
+              pButton
+              pRipple
+              type="button"
+              pSaveEditableRow
+              icon="pi pi-check"
+              (click)="onRowEditSave(product)"
+              style="margin-right: 1em"
+            ></button>
+            <button
+              *ngIf="editing"
+              pButton
+              pRipple
+              type="button"
+              pCancelEditableRow
+              icon="pi pi-times"
+              (click)="onRowEditCancel(product, ri)"
+            ></button>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+
+<p-dialog [(visible)]="productDialog" header="Create New Product" [modal]="true" styleClass="p-fluid">
+  <ng-template pTemplate="content">
+    <div class="field">
+      <label for="newProductCode">Code</label>
+      <input type="text" pInputText id="newProductCode" [(ngModel)]="product.code" required />
+    </div>
+
+    <div class="field">
+      <label for="newProductName">Name</label>
+      <input type="text" pInputText id="newProductName" [(ngModel)]="product.name" required />
+    </div>
+    
   </ng-template>
-</p-table>
+  <ng-template pTemplate="footer">
+    <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveProduct()"></button>
+  </ng-template>
+</p-dialog>

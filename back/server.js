@@ -2,6 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const fs = require("fs").promises;
 const cors = require("cors");
+const Product = require('./Product');
 
 const app = express();
 app.use(cors());
@@ -10,7 +11,9 @@ const dataFilePath = "products.json";
 
 app.use(bodyParser.json());
 
-let products = [];
+let products = {
+	data: []
+};
 
 // Load products from the local file on server start
 loadProductsFromFile();
@@ -21,9 +24,10 @@ app.get("/api/products", (req, res) => {
 });
 
 // Update an existing product
-app.put("/api/products", async (req, res) => {
+app.patch("/api/products/:id", async (req, res) => {
 	const updatedProduct = req.body;
-	const index = products["data"].findIndex((p) => p.id === updatedProduct.id);
+	const id = parseInt(req.params.id);
+	const index = products["data"].findIndex((p) => p.id === id);
 	if (index !== -1) {
 		products["data"][index] = updatedProduct;
 		try {
@@ -35,6 +39,29 @@ app.put("/api/products", async (req, res) => {
 	} else {
 		res.status(404).json({ error: "Product not found" });
 	}
+});
+
+app.delete("/api/products/:id", (req, res) => {
+	const productId = parseInt(req.params.id);
+
+	products = products.filter((p) => p.id !== productId);
+	saveProductsToFile();
+
+	res.json({ message: "Product deleted successfully" });
+});
+
+// Add a new product
+app.post("/api/products", (req, res) => {
+	let newProduct = new Product();
+	do {
+		id = Math.floor(Math.random() * 1000);
+	} while (products["data"].find((item) => item.id === id) !== undefined);
+	
+	newProduct.id = id;
+	newProduct = { ...newProduct, ...req.body };
+	products["data"].push(newProduct);
+	saveProductsToFile();
+	res.json(newProduct);
 });
 
 async function loadProductsFromFile() {

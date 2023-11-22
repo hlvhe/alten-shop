@@ -19,7 +19,7 @@ export class ProductService {
   }
 
   updateProduct(product: Product): Observable<Product> {
-    return this.http.put<Product>(this.apiUrl, product).pipe(
+    return this.http.patch<Product>(`${this.apiUrl}/${product.id}`, product).pipe(
       catchError((error) => {
         console.error('Error updating product:', error);
         throw error;
@@ -27,7 +27,11 @@ export class ProductService {
   }
 
   addProduct(product: Product): Observable<Product> {
-    return this.http.post<Product>(this.apiUrl, product);
+    return this.http.post<Product>(this.apiUrl, product).pipe(
+      catchError((error) => {
+        console.error('Error updating product:', error);
+        throw error;
+      }));
   }
 
   deleteProduct(productId: number): Observable<void> {
