@@ -35,6 +35,10 @@ export class ProductService {
   }
 
   deleteProduct(productId: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${productId}`);
+    return this.http.delete<void>(`${this.apiUrl}/${productId}`).pipe(
+      catchError((error) => {
+        console.error('Error updating product:', error);
+        throw error;
+      }));
   }
 }

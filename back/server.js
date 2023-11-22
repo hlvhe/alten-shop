@@ -41,12 +41,10 @@ app.patch("/api/products/:id", async (req, res) => {
 	}
 });
 
-app.delete("/api/products/:id", (req, res) => {
+app.delete("/api/products/:id", async (req, res) => {
 	const productId = parseInt(req.params.id);
-
-	products = products.filter((p) => p.id !== productId);
-	saveProductsToFile();
-
+	products["data"] = products["data"].filter((p) => p.id !== productId);
+	await saveProductsToFile();
 	res.json({ message: "Product deleted successfully" });
 });
 

@@ -64,6 +64,19 @@ export class ProductsAdminComponent implements OnInit {
     this.productDialog = true;
   }
 
+  deleteProduct(product: Product) {
+    const index = this.products.findIndex((item) => product.id === item.id);
+    this.products.splice(index,1); 
+    this.productService.deleteProduct(product.id).subscribe({
+      next: () => {
+      },
+      error: (error) => {
+        console.error("Error updating product:", error);
+        this.loadProducts();
+      },
+    });
+  }
+
   saveProduct() {
     this.productService.addProduct(this.product).subscribe({
       next: (newProduct) => {
