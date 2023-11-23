@@ -1,13 +1,13 @@
 class Product {
   constructor() {
     this.id = undefined;
-    this.name = "name",
-    this.code = "code";
-    this.description = "";
+    this.name = "",
+    this.code = "";
+    this.description = "description";
     this.price = 150;
     this.quantity = 10;
     this.inventoryStatus = "INSTOCK";
-    this.category = "";
+    this.category = "Accessories";
     this.image = "";
     this.rating = 5;
   }
