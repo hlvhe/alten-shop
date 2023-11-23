@@ -2,16 +2,17 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const swaggerUi = require("swagger-ui-express");
+const YAML = require("yamljs");
 const Product = require("./Product");
 
 const app = express();
 app.use(cors());
 const port = 3000;
 
-mongoose.connect(
-	"mongodb+srv://user-cluster-0:UySwpfgkzdCjfrkb@cluster0.e0eoema.mongodb.net/alten-shop-products?retryWrites=true&w=majority",
-	{}
-);
+const swaggerDocument = YAML.load("swagger.yaml");
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
 
 app.use(bodyParser.json());
 
@@ -65,6 +66,12 @@ const productSchema = new mongoose.Schema(
 );
 
 const ProductModel = mongoose.model("Product", productSchema);
+
+mongoose.connect(
+	"mongodb+srv://user-cluster-0:UySwpfgkzdCjfrkb@cluster0.e0eoema.mongodb.net/alten-shop-products?retryWrites=true&w=majority",
+	{}
+);
+
 
 // Get all products
 app.get("/api/products", async (req, res) => {
